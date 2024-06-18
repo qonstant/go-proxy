@@ -1,0 +1,70 @@
+basePath: /
+definitions:
+  main.RequestData:
+    properties:
+      body:
+        type: string
+      headers:
+        additionalProperties:
+          type: string
+        type: object
+      method:
+        type: string
+      url:
+        type: string
+    type: object
+  main.ResponseData:
+    properties:
+      headers:
+        additionalProperties:
+          type: string
+        type: object
+      id:
+        type: string
+      length:
+        type: integer
+      status:
+        type: integer
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: This is a simple HTTP proxy server.
+  title: HTTP Proxy Server API
+  version: "1.0"
+paths:
+  /proxy:
+    post:
+      consumes:
+      - application/json
+      description: Proxy an HTTP request to an external service and return the response.
+      parameters:
+      - description: Request Data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/main.RequestData'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.ResponseData'
+        "400":
+          description: Invalid JSON format
+          schema:
+            type: string
+        "405":
+          description: Only POST method is allowed
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Proxy HTTP request
+      tags:
+      - proxy
+swagger: "2.0"
