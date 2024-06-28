@@ -25,6 +25,13 @@ test:
 	@echo "Running tests..."
 	@go test -v
 
+# Test the application
+test-html:
+	@echo "Creation of UI for tests..."
+	@go test -coverprofile=cover.txt
+	@go tool cover -html=cover.txt
+
+
 # Build the Docker image
 docker-build:
 	@echo "Building the Docker image..."

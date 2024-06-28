@@ -13,7 +13,7 @@ func TestProxyHandler(t *testing.T) {
     t.Run("valid request", func(t *testing.T) {
         requestData := RequestData{
             Method: "GET",
-            URL:    "http://example.com",
+            URL:    "http://google.com",
             Headers: map[string]string{
                 "Content-Type": "application/json",
             },
