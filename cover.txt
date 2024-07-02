@@ -1,7 +1,7 @@
 mode: set
 go-proxy/main.go:44.13,61.2 7 0
 go-proxy/main.go:75.59,79.33 2 1
-go-proxy/main.go:79.33,82.3 2 0
+go-proxy/main.go:79.33,82.3 2 1
 go-proxy/main.go:85.2,86.16 2 1
 go-proxy/main.go:86.16,89.3 2 0
 go-proxy/main.go:92.2,92.59 1 1
