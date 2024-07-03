@@ -8,11 +8,12 @@ import (
 	"net/http"
 	"sync"
 
+	_ "go-proxy/docs"
+
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/google/uuid"
 	httpSwagger "github.com/swaggo/http-swagger"
-	_ "go-proxy/docs"
 )
 
 // RequestData represents the JSON structure of the client's request
@@ -84,7 +85,7 @@ func proxyHandler(w http.ResponseWriter, r *http.Request) {
 	// Reading the request body
 	body, err := io.ReadAll(r.Body)
 	if err != nil {
-		http.Error(w, "Can't read request body", http.StatusBadRequest)
+		http.Error(w, "Invalid JSON format", http.StatusBadRequest)
 		return
 	}
 
