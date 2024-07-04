@@ -92,6 +92,9 @@ const docTemplate = `{
         "main.ResponseData": {
             "type": "object",
             "properties": {
+                "body": {
+                    "type": "string"
+                },
                 "headers": {
                     "type": "object",
                     "additionalProperties": {

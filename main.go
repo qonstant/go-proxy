@@ -2,10 +2,10 @@ package main
 
 import (
 	"encoding/json"
-	_ "fmt"
 	"io"
 	"log"
 	"net/http"
+	"strings"
 	"sync"
 
 	_ "go-proxy/docs"
@@ -30,9 +30,11 @@ type ResponseData struct {
 	Status  int               `json:"status"`
 	Headers map[string]string `json:"headers"`
 	Length  int               `json:"length"`
+	Body    string            `json:"body"`
 }
 
 var (
+	client        = &http.Client{}
 	requestStore  sync.Map
 	responseStore sync.Map
 )
@@ -85,20 +87,22 @@ func proxyHandler(w http.ResponseWriter, r *http.Request) {
 	// Reading the request body
 	body, err := io.ReadAll(r.Body)
 	if err != nil {
+		log.Printf("Error reading request body: %v", err)
 		http.Error(w, "Invalid JSON format", http.StatusBadRequest)
 		return
 	}
 
 	// Parsing the JSON body request
 	if err := json.Unmarshal(body, &requestData); err != nil {
+		log.Printf("Error unmarshaling request body: %v", err)
 		http.Error(w, "Invalid JSON format", http.StatusBadRequest)
 		return
 	}
 
 	// Creating new http request for the external service
-	client := &http.Client{}
-	req, err := http.NewRequest(requestData.Method, requestData.URL, nil)
+	req, err := http.NewRequest(requestData.Method, requestData.URL, strings.NewReader(requestData.Body))
 	if err != nil {
+		log.Printf("Error creating new request: %v", err)
 		http.Error(w, "Can't create request", http.StatusInternalServerError)
 		return
 	}
@@ -108,9 +112,15 @@ func proxyHandler(w http.ResponseWriter, r *http.Request) {
 		req.Header.Add(k, v)
 	}
 
+	// Setting Content-Type if provided
+	if contentType, exists := requestData.Headers["Content-Type"]; exists {
+		req.Header.Set("Content-Type", contentType)
+	}
+
 	// Executing the request to external service
 	resp, err := client.Do(req)
 	if err != nil {
+		log.Printf("Error making request to external service: %v", err)
 		http.Error(w, "Error making request to external service", http.StatusInternalServerError)
 		return
 	}
@@ -119,6 +129,7 @@ func proxyHandler(w http.ResponseWriter, r *http.Request) {
 	// Reading response body
 	responseBody, err := io.ReadAll(resp.Body)
 	if err != nil {
+		log.Printf("Error reading response body: %v", err)
 		http.Error(w, "Can't read response body", http.StatusInternalServerError)
 		return
 	}
@@ -126,7 +137,7 @@ func proxyHandler(w http.ResponseWriter, r *http.Request) {
 	// Constructing response data
 	responseHeaders := make(map[string]string)
 	for key, values := range resp.Header {
-		responseHeaders[key] = values[0]
+		responseHeaders[key] = strings.Join(values, ", ")
 	}
 
 	responseID := uuid.New().String()
@@ -135,6 +146,7 @@ func proxyHandler(w http.ResponseWriter, r *http.Request) {
 		Status:  resp.StatusCode,
 		Headers: responseHeaders,
 		Length:  len(responseBody),
+		Body:    string(responseBody),
 	}
 
 	// Save request and response in sync.Map
@@ -144,5 +156,7 @@ func proxyHandler(w http.ResponseWriter, r *http.Request) {
 	// Returning JSON response
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(responseData)
+	if err := json.NewEncoder(w).Encode(responseData); err != nil {
+		log.Printf("Error encoding response data: %v", err)
+	}
 }
