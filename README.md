@@ -145,6 +145,34 @@ From the example above:
 
 - Link: https://go-proxy-1fo6.onrender.com/swagger/index.html
 
+# Swagger: HTTP tutorial for beginners
+
+1. Add comments to your API source code, See [Declarative Comments Format](#declarative-comments-format).
+
+2. Download swag by using:
+```sh
+go install github.com/swaggo/swag/cmd/swag@latest
+```
+To build from source you need [Go](https://golang.org/dl/) (1.17 or newer).
+
+Or download a pre-compiled binary from the [release page](https://github.com/swaggo/swag/releases).
+
+3. Run `swag init` in the project's root folder which contains the `main.go` file. This will parse your comments and generate the required files (`docs` folder and `docs/docs.go`).
+```sh
+swag init
+```
+
+  Make sure to import the generated `docs/docs.go` so that your specific configuration gets `init`'ed. If your General API annotations do not live in `main.go`, you can let swag know with `-g` flag.
+  ```sh
+  swag init -g internal/handler/handler.go
+  ```
+
+4. (optional) Use `swag fmt` format the SWAG comment. (Please upgrade to the latest version)
+
+  ```sh
+  swag fmt
+  ```
+
 ## Project Structure
 
 - main.go: The main server implementation.
