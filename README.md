@@ -37,6 +37,8 @@ make run
 ```
 After running make run, the server will start and be accessible at http://localhost:8080.
 
+Link to the deployment: https://go-proxy-1fo6.onrender.com/proxy
+
 ### Generate Swagger Documentation
 
 ```bash
@@ -80,6 +82,17 @@ make docker-remove
     }
 }
 ```
+
+
+```json
+{
+    "method": "GET",
+    "url": "http://jsonplaceholder.typicode.com/posts/1",
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+```
 - Response:
 ```json
 {
@@ -95,6 +108,8 @@ make docker-remove
 ### Swagger Documentation
 
 - URL: /swagger/
+
+- Link: https://go-proxy-1fo6.onrender.com/swagger/index.html
 
 ## Project Structure
 
