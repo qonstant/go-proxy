@@ -11,6 +11,13 @@ services:
       - "8080:8080"
     env_file:
       - .env
-    # volumes:
-    #   - .:/app
-    # command: ["./go-proxy-server"]
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -f -X POST -H 'Content-Type: application/json' -d '{\"method\": \"GET\", \"url\": \"http://jsonplaceholder.typicode.com/posts/1\", \"headers\": {\"Content-Type\": \"application/json\"}}' http://localhost:8080/proxy || exit 1"
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
