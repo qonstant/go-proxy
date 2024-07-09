@@ -49,21 +49,17 @@ make swagger
 make test
 ```
 ## Docker
-### Build the Docker Image
+### For docker compose up
 ```bash
-make docker-build
+make up
 ```
-### Run the Docker Container
+### For docker compose down
 ```bash
-make docker-run
+make down
 ```
-### Stop the Docker Container
+### For restarting container
 ```bash
-make docker-stop
-```
-### Remove the Docker Container
-```bash
-make docker-remove
+make restart
 ```
 
 ## API Endpoints

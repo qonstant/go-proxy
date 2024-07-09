@@ -52,6 +52,19 @@ docker-remove:
 	@echo "Removing the Docker container..."
 	@docker rm $(DOCKER_CONTAINER)
 
+# Docker Compose up
+up:
+	@echo "Docker compose up..."
+	@docker compose up -d
+
+# Docker Compose down
+down:
+	@echo "Docker compose down..."
+	@docker compose down
+
+# Restart container
+restart: down up
+
 # Clean up build artifacts
 clean:
 	@echo "Cleaning up..."
