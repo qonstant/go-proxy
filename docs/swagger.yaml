@@ -28,7 +28,7 @@ definitions:
       status:
         type: integer
     type: object
-host: localhost:8080
+host: go-proxy-1fo6.onrender.com
 info:
   contact: {}
   description: This is a simple HTTP proxy server.
@@ -69,4 +69,6 @@ paths:
       summary: Proxy HTTP request
       tags:
       - proxy
+schemes:
+- https
 swagger: "2.0"

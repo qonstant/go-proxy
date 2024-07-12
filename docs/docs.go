@@ -118,9 +118,9 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "localhost:8080",
+	Host:             "go-proxy-1fo6.onrender.com",
 	BasePath:         "/",
-	Schemes:          []string{},
+	Schemes:          []string{"https"},
 	Title:            "HTTP Proxy Server API",
 	Description:      "This is a simple HTTP proxy server.",
 	InfoInstanceName: "swagger",

@@ -42,8 +42,9 @@ var (
 // @title HTTP Proxy Server API
 // @version 1.0
 // @description This is a simple HTTP proxy server.
-// @host localhost:8080
 // @BasePath /
+// @host go-proxy-1fo6.onrender.com
+// @schemes https
 func main() {
 	// Create a new chi router
 	r := chi.NewRouter()

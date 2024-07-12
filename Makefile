@@ -61,6 +61,7 @@ up:
 down:
 	@echo "Docker compose down..."
 	@docker compose down
+	@docker rmi go-proxy-server
 
 # Restart container
 restart: down up

@@ -1,4 +1,7 @@
 {
+    "schemes": [
+        "https"
+    ],
     "swagger": "2.0",
     "info": {
         "description": "This is a simple HTTP proxy server.",
@@ -6,7 +9,7 @@
         "contact": {},
         "version": "1.0"
     },
-    "host": "localhost:8080",
+    "host": "go-proxy-1fo6.onrender.com",
     "basePath": "/",
     "paths": {
         "/proxy": {
