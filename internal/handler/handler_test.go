@@ -1,4 +1,4 @@
-package main
+package handler
 
 import (
 	"bytes"
@@ -14,7 +14,7 @@ import (
 	httpSwagger "github.com/swaggo/http-swagger"
 )
 
-// Test the proxyHandler
+// Test the ProxyHandler
 func TestProxyHandler(t *testing.T) {
 	// Test case: Valid request
 	t.Run("valid request", func(t *testing.T) {
@@ -31,7 +31,7 @@ func TestProxyHandler(t *testing.T) {
 		req.Header.Set("Content-Type", "application/json")
 
 		rr := httptest.NewRecorder()
-		handler := http.HandlerFunc(proxyHandler)
+		handler := http.HandlerFunc(ProxyHandler)
 		handler.ServeHTTP(rr, req)
 
 		assert.Equal(t, http.StatusOK, rr.Code, "handler returned wrong status code")
@@ -51,7 +51,7 @@ func TestProxyHandler(t *testing.T) {
 		req := httptest.NewRequest(http.MethodPost, "/proxy", bytes.NewBufferString(invalidJSON))
 
 		rr := httptest.NewRecorder()
-		handler := http.HandlerFunc(proxyHandler)
+		handler := http.HandlerFunc(ProxyHandler)
 		handler.ServeHTTP(rr, req)
 
 		assert.Equal(t, http.StatusBadRequest, rr.Code, "handler returned wrong status code")
@@ -63,7 +63,7 @@ func TestProxyHandler(t *testing.T) {
 		req := httptest.NewRequest(http.MethodGet, "/proxy", nil)
 
 		rr := httptest.NewRecorder()
-		handler := http.HandlerFunc(proxyHandler)
+		handler := http.HandlerFunc(ProxyHandler)
 		handler.ServeHTTP(rr, req)
 
 		assert.Equal(t, http.StatusMethodNotAllowed, rr.Code, "handler returned wrong status code")
@@ -76,7 +76,7 @@ func TestProxyHandler(t *testing.T) {
 		req := httptest.NewRequest(http.MethodPost, "/proxy", nil)
 
 		rr := httptest.NewRecorder()
-		handler := http.HandlerFunc(proxyHandler)
+		handler := http.HandlerFunc(ProxyHandler)
 		handler.ServeHTTP(rr, req)
 
 		assert.Equal(t, http.StatusBadRequest, rr.Code, "handler returned wrong status code")
@@ -91,7 +91,7 @@ func TestMainFunction(t *testing.T) {
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
 	r.Get("/swagger/*", httpSwagger.WrapHandler)
-	r.Post("/proxy", proxyHandler)
+	r.Post("/proxy", ProxyHandler)
 
 	// Test case: Swagger route
 	t.Run("swagger route", func(t *testing.T) {

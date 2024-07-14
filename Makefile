@@ -23,13 +23,13 @@ swagger:
 # Test the application
 test:
 	@echo "Running tests..."
-	@go test -v
+	@go test -v ./... 
 
 # Test the application
 test-html:
 	@echo "Creation of UI for tests..."
-	@go test -coverprofile=cover.txt
-	@go tool cover -html=cover.txt
+	@cd internal/handler && go test -coverprofile=cover.txt
+	@cd internal/handler && go tool cover -html=cover.txt
 
 
 # Build the Docker image
