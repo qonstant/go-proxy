@@ -64,7 +64,7 @@ down:
 	@docker rmi go-proxy-server
 
 # Restart container
-restart: down up
+restart: swagger down up
 
 # Clean up build artifacts
 clean:

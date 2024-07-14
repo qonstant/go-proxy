@@ -35,7 +35,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/main.RequestData"
+                            "$ref": "#/definitions/models.RequestData"
                         }
                     }
                 ],
@@ -43,7 +43,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/main.ResponseData"
+                            "$ref": "#/definitions/models.ResponseData"
                         }
                     },
                     "400": {
@@ -69,7 +69,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "main.RequestData": {
+        "models.RequestData": {
             "type": "object",
             "properties": {
                 "body": {
@@ -89,7 +89,7 @@ const docTemplate = `{
                 }
             }
         },
-        "main.ResponseData": {
+        "models.ResponseData": {
             "type": "object",
             "properties": {
                 "body": {
@@ -118,9 +118,9 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "go-proxy-1fo6.onrender.com",
+	Host:             "localhost:8080",
 	BasePath:         "/",
-	Schemes:          []string{"https"},
+	Schemes:          []string{"http", "https"},
 	Title:            "HTTP Proxy Server API",
 	Description:      "This is a simple HTTP proxy server.",
 	InfoInstanceName: "swagger",

@@ -1,5 +1,6 @@
 {
     "schemes": [
+        "http",
         "https"
     ],
     "swagger": "2.0",
@@ -9,7 +10,7 @@
         "contact": {},
         "version": "1.0"
     },
-    "host": "go-proxy-1fo6.onrender.com",
+    "host": "localhost:8080",
     "basePath": "/",
     "paths": {
         "/proxy": {
@@ -32,7 +33,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/main.RequestData"
+                            "$ref": "#/definitions/models.RequestData"
                         }
                     }
                 ],
@@ -40,7 +41,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/main.ResponseData"
+                            "$ref": "#/definitions/models.ResponseData"
                         }
                     },
                     "400": {
@@ -66,7 +67,7 @@
         }
     },
     "definitions": {
-        "main.RequestData": {
+        "models.RequestData": {
             "type": "object",
             "properties": {
                 "body": {
@@ -86,7 +87,7 @@
                 }
             }
         },
-        "main.ResponseData": {
+        "models.ResponseData": {
             "type": "object",
             "properties": {
                 "body": {

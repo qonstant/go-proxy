@@ -1,6 +1,6 @@
 basePath: /
 definitions:
-  main.RequestData:
+  models.RequestData:
     properties:
       body:
         type: string
@@ -13,7 +13,7 @@ definitions:
       url:
         type: string
     type: object
-  main.ResponseData:
+  models.ResponseData:
     properties:
       body:
         type: string
@@ -28,7 +28,7 @@ definitions:
       status:
         type: integer
     type: object
-host: go-proxy-1fo6.onrender.com
+host: localhost:8080
 info:
   contact: {}
   description: This is a simple HTTP proxy server.
@@ -46,14 +46,14 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/main.RequestData'
+          $ref: '#/definitions/models.RequestData'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/main.ResponseData'
+            $ref: '#/definitions/models.ResponseData'
         "400":
           description: Invalid JSON format
           schema:
@@ -70,5 +70,6 @@ paths:
       tags:
       - proxy
 schemes:
+- http
 - https
 swagger: "2.0"

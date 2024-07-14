@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"go-proxy/internal/models"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -17,7 +18,7 @@ import (
 func TestProxyHandler(t *testing.T) {
 	// Test case: Valid request
 	t.Run("valid request", func(t *testing.T) {
-		requestData := RequestData{
+		requestData := models.RequestData{
 			Method: "GET",
 			URL:    "http://google.com",
 			Headers: map[string]string{
@@ -35,7 +36,7 @@ func TestProxyHandler(t *testing.T) {
 
 		assert.Equal(t, http.StatusOK, rr.Code, "handler returned wrong status code")
 
-		var responseData ResponseData
+		var responseData models.ResponseData
 		err := json.NewDecoder(rr.Body).Decode(&responseData)
 		assert.NoError(t, err, "error decoding response body")
 
@@ -104,7 +105,7 @@ func TestMainFunction(t *testing.T) {
 
 	// Test case: Proxy route
 	t.Run("proxy route", func(t *testing.T) {
-		requestData := RequestData{
+		requestData := models.RequestData{
 			Method: "GET",
 			URL:    "http://google.com",
 			Headers: map[string]string{
